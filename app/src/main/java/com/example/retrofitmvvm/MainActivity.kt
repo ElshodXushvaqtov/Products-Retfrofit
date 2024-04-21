@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val api = ApiClient.retrofit.create(ApiService::class.java)
+                    val api = ApiClient.getInstance().create(ApiService::class.java)
                     val homeModel = HomeModel(api)
                     val homeViewModel = MainViewModel(homeModel)
                     HomeView(viewModel = homeViewModel)

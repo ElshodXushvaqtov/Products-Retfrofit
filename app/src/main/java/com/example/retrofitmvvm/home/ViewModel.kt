@@ -7,9 +7,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class MainViewModel(val model:HomeModel) : ViewModel() {
-    val _products: MutableStateFlow<List<Product>?> = MutableStateFlow(null)
-    var products:StateFlow<List<Product>?> = _products
+class MainViewModel(private val model:HomeModel) : ViewModel() {
+    private val _products: MutableStateFlow<List<Product>?> = MutableStateFlow(null)
+    val products:StateFlow<List<Product>?> = _products
 
    private fun getProducts() {
         viewModelScope.launch {
