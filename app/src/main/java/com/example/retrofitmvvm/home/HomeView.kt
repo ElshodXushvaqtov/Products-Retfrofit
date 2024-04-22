@@ -1,7 +1,9 @@
 package com.example.retrofitmvvm.home
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -33,18 +35,19 @@ fun HomeView(viewModel: MainViewModel) {
     val productsData = viewModel.products.collectAsState().value
     var searchText by remember { mutableStateOf(TextFieldValue()) }
 
-    LazyColumn {
-        if (productsData != null) {
-            items(productsData.products.size) {
-                ProductItem(product = productsData.products[it])
+        LazyColumn {
+            if (productsData != null) {
+                items(productsData.products.size) {
+                    ProductItem(product = productsData.products[it])
+                }
             }
         }
-    }
-    Row {
+
         OutlinedTextField(
             value = searchText,
             onValueChange = {
                 searchText = it
+                viewModel.searchProduct(searchText.text)
             },
             placeholder = { Text("Search") },
             modifier = Modifier.fillMaxWidth(),
@@ -57,19 +60,18 @@ fun HomeView(viewModel: MainViewModel) {
             },
             keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Done
-            ),
-            keyboardActions = KeyboardActions(onDone = {
-                viewModel.searchProduct(searchText.text)
-            })
+            )
         )
 
+
     }
-}
 
 
 @Composable
 fun ProductItem(product: Product) {
-    Card(modifier = Modifier.fillMaxWidth()) {
+    Card(modifier = Modifier
+        .fillMaxWidth()
+        .padding(5.dp)) {
 
         Column(
             modifier = Modifier
