@@ -8,11 +8,11 @@ import retrofit2.http.Query
 
 interface ApiService {
     @GET("/products")
-    suspend fun getProducts(): List<Product>
+    suspend fun getProducts():ProductData
 
     @GET("/products/{id}")
-    suspend fun getProduct(@Path("id") id: Int): List<Product>
+    suspend fun getProduct(@Path("id") id: Int): Product
 
-    @GET("products/search")
-    suspend fun searchByName(@Query("q") name: String): List<ProductData>
+    @GET("/products/search")
+    suspend fun searchByName(@Query("q") name: String): ProductData
 }

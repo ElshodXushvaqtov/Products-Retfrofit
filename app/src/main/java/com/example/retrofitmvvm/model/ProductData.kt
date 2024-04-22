@@ -1,3 +1,8 @@
 package com.example.retrofitmvvm.model
 
-data class ProductData(var products: List<Product>)
+data class ProductData(
+    val limit: Int,
+    val products: List<Product>,
+    val skip: Int,
+    val total: Int
+)
