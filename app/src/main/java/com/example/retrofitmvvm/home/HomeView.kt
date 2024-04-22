@@ -32,46 +32,46 @@ import com.example.retrofitmvvm.model.ProductData
 
 @Composable
 fun HomeView(viewModel: MainViewModel) {
+
     val productsData = viewModel.products.collectAsState().value
     var searchText by remember { mutableStateOf(TextFieldValue()) }
 
-        LazyColumn {
-            if (productsData != null) {
-                items(productsData.products.size) {
-                    ProductItem(product = productsData.products[it])
-                }
+    LazyColumn {
+        if (productsData != null) {
+            items(productsData.products.size) {
+                ProductItem(product = productsData.products[it])
             }
         }
-
-        OutlinedTextField(
-            value = searchText,
-            onValueChange = {
-                searchText = it
-                viewModel.searchProduct(searchText.text)
-            },
-            placeholder = { Text("Search") },
-            modifier = Modifier.fillMaxWidth(),
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Filled.Search,
-                    contentDescription = null,
-                    tint = Color.Gray
-                )
-            },
-            keyboardOptions = KeyboardOptions.Default.copy(
-                imeAction = ImeAction.Done
-            )
-        )
-
-
     }
 
+    OutlinedTextField(
+        value = searchText,
+        onValueChange = {
+            searchText = it
+            viewModel.searchProduct(searchText.text)
+        },
+        placeholder = { Text("Search") },
+        modifier = Modifier.fillMaxWidth(),
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Filled.Search,
+                contentDescription = null,
+                tint = Color.Gray
+            )
+        },
+        keyboardOptions = KeyboardOptions.Default.copy(
+            imeAction = ImeAction.Done
+        )
+    )
+}
 
 @Composable
 fun ProductItem(product: Product) {
-    Card(modifier = Modifier
-        .fillMaxWidth()
-        .padding(5.dp)) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(5.dp)
+    ) {
 
         Column(
             modifier = Modifier
