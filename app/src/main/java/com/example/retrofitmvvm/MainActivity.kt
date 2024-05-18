@@ -6,16 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.ViewModel
+import androidx.navigation.compose.rememberNavController
 import com.example.retrofitmvvm.api.ApiClient
 import com.example.retrofitmvvm.api.ApiService
 import com.example.retrofitmvvm.home.HomeModel
 import com.example.retrofitmvvm.home.HomeView
-import com.example.retrofitmvvm.home.MainViewModel
+import com.example.retrofitmvvm.home.HomeViewModel
+import com.example.retrofitmvvm.navigation.Navigation
 import com.example.retrofitmvvm.ui.theme.RetrofitMVVMTheme
 
 class MainActivity : ComponentActivity() {
@@ -28,10 +26,12 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    val navController = rememberNavController()
+                    Navigation(navHostController = navController)
                     val api = ApiClient.getInstance().create(ApiService::class.java)
                     val homeModel = HomeModel(api)
-                    val homeViewModel = MainViewModel(homeModel)
-                    HomeView(viewModel = homeViewModel)
+                    val homeViewModel = HomeViewModel(homeModel)
+                    HomeView(viewModel = homeViewModel, navController)
                 }
             }
         }
