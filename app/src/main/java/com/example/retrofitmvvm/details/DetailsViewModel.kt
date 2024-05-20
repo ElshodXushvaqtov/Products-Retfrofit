@@ -7,12 +7,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class DetailsViewModel(private val model: DetailsModel) : ViewModel() {
+class DetailsViewModel(private val model: DetailsModel,val id:Int) : ViewModel() {
 
     private val _product: MutableStateFlow<Product?> = MutableStateFlow(null)
     val product: StateFlow<Product?> = _product
 
-    private fun getProduct(id: Int) {
+    init {
+        getProduct()
+    }
+
+    private fun getProduct() {
         viewModelScope.launch {
             _product.value = model.getProduct(id)
         }

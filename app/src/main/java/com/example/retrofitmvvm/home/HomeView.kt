@@ -10,7 +10,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -27,9 +26,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.retrofitmvvm.model.Product
-import com.example.retrofitmvvm.navigation.Navigation
+
 
 @Composable
 fun HomeView(viewModel: HomeViewModel, navHostController: NavHostController) {
@@ -70,8 +68,7 @@ fun HomeView(viewModel: HomeViewModel, navHostController: NavHostController) {
         if (productsData != null) {
             items(productsData.products.size) {
                 ProductItem(
-                    product = productsData.products[it],
-                    clicked = { navHostController.navigate("details") }
+                    product = productsData.products[it], navHostController = navHostController
                 )
             }
         }
@@ -80,12 +77,12 @@ fun HomeView(viewModel: HomeViewModel, navHostController: NavHostController) {
 }
 
 @Composable
-fun ProductItem(product: Product,clicked: () -> Unit) {
+fun ProductItem(product: Product, navHostController: NavHostController) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(5.dp)
-            .clickable {clicked()}
+            .clickable { navHostController.navigate("details/${product.id}") }
     ) {
         Column(
             modifier = Modifier
